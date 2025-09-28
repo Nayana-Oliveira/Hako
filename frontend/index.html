@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hako</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="icon" type="image/png" href="/frontend/uploads/logo.png">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/epub.js/0.3.93/epub.min.js"></script>
+</head>
+<body>
+    
+    <div id="app-container">
+        <header>
+            <a href="#" id="home-link" class="logo">
+                <img src="uploads/logo.png" alt="Logotipo Hako" class="header-logo">
+                <h1>Hako</h1>
+            </a>
+            <div class="header-actions">
+                <button type="button" id="favorites-btn" class="icon-btn" title="Mostrar Favoritos">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                </button>
+                <button type="button" id="open-upload-modal-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    <span>Adicionar</span>
+                </button>
+            </div>
+        </header>
+        
+        <main>
+            <div id="library-view">
+                <div id="navigation-header">
+                    <div class="view-header">
+                        <button type="button" id="back-button" class="icon-btn hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        </button>
+                        <h2 id="current-view-title">Biblioteca</h2>
+                    </div>
+                    <div id="search-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" id="search-input" placeholder="Buscar por título ou autor...">
+                        <button type="button" id="search-button" class="hidden">Buscar</button>
+                    </div>
+                </div>
+                
+                <div id="filters-container"></div>
+
+                <div id="favorites-section" class="home-section hidden">
+                    <h3 class="section-title">DESTAQUES</h3>
+                    <div id="favorites-grid" class="content-grid"></div>
+                </div>
+                
+                <div id="library-section" class="home-section">
+                    <h3 class="section-title">SUA BIBLIOTECA</h3>
+                    <div id="content-grid" class="content-grid"></div>
+                </div>
+            </div>
+
+            <div id="manga-detail-view" class="hidden"></div>
+        </main>
+    </div>
+
+    <div id="viewer-container" class="hidden">
+        <div id="viewer">
+            <header id="viewer-header">
+                <button type="button" id="close-viewer" class="icon-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+                <div id="chapter-nav">
+                    <button type="button" id="prev-chapter-btn" class="icon-btn" title="Capítulo Anterior">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    </button>
+                    <h2 id="viewer-title"></h2>
+                    <button type="button" id="next-chapter-btn" class="icon-btn" title="Próximo Capítulo">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
+                </div>
+            </header>
+            <div id="viewer-content"></div>
+            <div id="viewer-nav" class="hidden">
+                <div id="paginated-nav">
+                    <button type="button" id="prev-page">Anterior</button>
+                    <span id="page-indicator"></span>
+                    <button type="button" id="next-page">Próxima</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="upload-modal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="form-title">Adicionar Novo Capítulo</h2>
+                <button id="close-upload-modal-btn" class="close-btn icon-btn">&times;</button>
+            </div>
+            <form id="upload-form">
+                <fieldset>
+                    <legend>Sobre o Mangá</legend>
+                    <label for="tituloManga">Título do Mangá*</label>
+                    <input type="text" id="tituloManga" name="tituloManga" required>
+                    <div class="form-grid">
+                        <div>
+                            <label for="autor">Autor</label>
+                            <input type="text" id="autor" name="autor">
+                        </div>
+                        <div>
+                            <label for="ano_lancamento">Ano</label>
+                            <input type="number" id="ano_lancamento" name="ano_lancamento" placeholder="Ex: 2023">
+                        </div>
+                    </div>
+                    <label for="genero">Gêneros (separados por vírgula)</label>
+                    <input type="text" id="genero" name="genero">
+                    <label for="status">Status</label>
+                    <select id="status" name="status">
+                        <option value="Em andamento">Em andamento</option>
+                        <option value="Finalizado">Finalizado</option>
+                    </select>
+                    <label for="sinopse">Sinopse</label>
+                    <textarea id="sinopse" name="sinopse" rows="4"></textarea>
+                    <label for="capa">Capa (Opcional)</label>
+                    <input type="file" id="capa" name="capa" accept="image/png, image/jpeg, image/webp">
+                    <input type="hidden" name="caminho_capa_existente" id="caminho_capa_existente">
+                </fieldset>
+                
+                <fieldset id="chapter-fieldset">
+                    <legend>Capítulos a Adicionar</legend>
+                    <label for="capituloFiles">Arquivos dos Capítulos* (.cbz, .epub, .pdf)</label>
+                    <input type="file" id="capituloFiles" name="capituloFiles" required multiple>
+                    <div id="capitulos-dinamicos-container"></div>
+                </fieldset>
+                
+                <button type="submit" class="submit-btn">Enviar</button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+/node_modules
+
+/uploads
+hako.db
+
+logs
+*.log
+npm-debug.log*
+
+.env
+
+.DS_Store
+Thumbs.db
+
+.vscode
+.idea
